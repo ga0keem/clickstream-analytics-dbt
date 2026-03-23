@@ -1,0 +1,70 @@
+version: 2
+
+sources:
+  - name: clickstream
+    description: >
+      2008년 의류 이커머스 사이트에서 수집된 사용자 클릭 로그 데이터.
+      각 row는 하나의 클릭 이벤트를 의미하며, 세션 내 클릭 순서, 상품 정보,
+      가격, UI 위치 등의 정보가 포함.
+
+    database: clickstream-project-491106
+    schema: clickstream_dbt
+
+    tables:
+      - name: raw_clickstream
+        description: >
+          사용자 세션 단위로 기록된 클릭 이벤트 데이터.
+          상품 카테고리, 상품 ID, 색상, 가격, UI 위치, 이미지 형태 등의 속성을 포함.
+
+        columns:
+          - name: year
+            description: 이벤트 발생 연도 (2008년)
+
+          - name: month
+            description: 이벤트 발생 월 (4월부터 8월까지)
+
+          - name: day
+            description: 이벤트 발생 일자
+
+          - name: order
+            description: 하나의 세션 내에서의 클릭 순서
+
+          - name: country
+            description: >
+              사용자 접속 국가 (IP 기반). 1~47까지의 코드로 표현되며
+              국가 또는 도메인(.com, .net 등)을 의미
+
+          - name: session_id
+            description: 사용자 방문을 구분하는 세션 ID
+
+          - name: page_1_main_category
+            description: >
+              상품의 메인 카테고리
+              (1=trousers, 2=skirts, 3=blouses, 4=sale)
+
+          - name: page_2_clothing_model
+            description: 상품 고유 코드 (약 217개 상품)
+
+          - name: colour
+            description: >
+              상품 색상 (1~14 코드로 표현되며 beige, black, blue 등 의미)
+
+          - name: location
+            description: >
+              웹페이지 내 상품 위치
+              (1=좌측 상단, 2=상단 중앙, 3=우측 상단,
+               4=좌측 하단, 5=하단 중앙, 6=우측 하단)
+
+          - name: model_photography
+            description: 상품 이미지 촬영 방식 (1=정면, 2=측면)
+
+          - name: price
+            description: 상품 가격 (미국 달러 기준)
+
+          - name: price_2
+            description: >
+              해당 상품 가격이 카테고리 평균보다 높은지 여부
+              (1=높음, 2=낮음)
+
+          - name: page
+            description: 웹사이트 내 페이지 번호 (1~5)
