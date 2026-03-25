@@ -1,0 +1,102 @@
+version: 2
+
+models:
+
+  - name: funnel_mart
+    description: >
+      세션 퍼널 분석 테이블.
+      각 페이지 단계(step)별 도달 세션 수와 전환율을 집계하여
+      사용자 이탈 흐름을 파악할 수 있도록 구성된 모델.
+
+    columns:
+      - name: step
+        description: 퍼널 단계 (step_1 ~ step_5)
+        tests:
+          - not_null
+          - unique
+
+      - name: session_count
+        description: 해당 단계에 도달한 세션 수
+        tests:
+          - not_null
+
+      - name: conversion_rate
+        description: step_1 대비 전환율
+
+
+  - name: product_mart
+    description: >
+      상품 단위 성과 분석 테이블.
+      이벤트 기준 조회 수와 세션 기준 전환율을 함께 제공하여
+      상품별 사용자 행동과 성과를 종합적으로 분석할 수 있다.
+
+    columns:
+      - name: product_id
+        description: 상품 ID
+        tests:
+          - not_null
+          - unique
+
+      - name: category
+        description: 상품 카테고리
+
+      - name: avg_price
+        description: 평균 가격
+
+      - name: total_views
+        description: 이벤트 기준 총 조회 수
+        tests:
+          - not_null
+
+      - name: conversion_rate
+        description: 세션 기준 전환율 (max_page 기준)
+
+
+  - name: ux_mart
+    description: >
+      UI 요소 성과 분석 테이블.
+      위치(location)와 이미지 유형(photography_type)에 따라
+      클릭 수(이벤트 기준)와 전환율(세션 기준)을 함께 분석한다.
+
+    columns:
+      - name: location
+        description: 페이지 내 위치
+        tests:
+          - not_null
+
+      - name: photography_type
+        description: 이미지 타입 (front / profile)
+        tests:
+          - not_null
+
+      - name: click_count
+        description: 이벤트 기준 클릭 수
+        tests:
+          - not_null
+
+      - name: conversion_rate
+        description: 세션 기준 전환율
+
+
+  - name: country_mart
+    description: >
+      국가별 사용자 행동 분석 테이블.
+      세션 수, 평균 페이지 탐색 깊이, 전환율을 기반으로
+      국가별 사용자 특성을 비교할 수 있다.
+
+    columns:
+      - name: country
+        description: 사용자 국가
+        tests:
+          - not_null
+
+      - name: session_count
+        description: 총 세션 수
+        tests:
+          - not_null
+
+      - name: avg_page_depth
+        description: 평균 페이지 도달 깊이
+
+      - name: conversion_rate
+        description: 세션 기준 전환율 

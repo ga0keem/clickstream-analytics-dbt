@@ -9,7 +9,9 @@ renamed as (
 
     select
         -- 날짜
-        date(year, month, day) as event_date,
+        year,
+        month,
+        day,
 
         -- 세션 / 이벤트
         `session ID` as session_id,
@@ -20,46 +22,16 @@ renamed as (
 
         -- 상품
         product_id,
-
-        case page_main_category
-            when 1 then 'trousers'
-            when 2 then 'skirts'
-            when 3 then 'blouses'
-            when 4 then 'sale'
-        end as category,
-
-        case colour
-            when 1 then 'beige'
-            when 2 then 'black'
-            when 3 then 'blue'
-            when 4 then 'brown'
-            when 5 then 'burgundy'
-            when 6 then 'gray'
-            when 7 then 'green'
-            when 8 then 'navy blue'
-            when 9 then 'multicolor'
-            when 10 then 'olive'
-            when 11 then 'pink'
-            when 12 then 'red'
-            when 13 then 'violet'
-            when 14 then 'white'
-        end as color,
+        page_main_category as category_code,
+        colour as color_code,
 
         -- UI / UX
-        location,
-
-        case `model photography`
-            when 1 then 'front'
-            when 2 then 'profile'
-        end as photography_type,
+        location as location_code,
+        `model photography` as photography_type_code,
 
         -- 가격
         price,
-
-        case `price 2`
-            when 1 then 'high'
-            else 'low'
-        end as price_segment,
+        `price 2` as price_segment_code,
 
         -- 페이지
         page as page_number

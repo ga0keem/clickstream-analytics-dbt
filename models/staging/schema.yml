@@ -4,14 +4,17 @@ models:
   - name: stg_clickstream
     description: >
       raw_clickstream source를 기반으로 생성된 staging 모델.
-      날짜 생성, 컬럼명 정리, 코드 값의 의미 변환을 수행하여
-      분석 가능한 형태로 정리된 이벤트 단위 데이터이다.
+      원본 컬럼명을 정리하고 최소 변환만 수행한 이벤트 단위 데이터이다.
 
     columns:
-      - name: event_date
-        description: 이벤트 발생 일자 (year, month, day를 결합하여 생성)
-        tests:
-          - not_null
+      - name: year
+        description: 이벤트 발생 연도 (2008년)
+
+      - name: month
+        description: 이벤트 발생 월 (4~8월)
+
+      - name: day
+        description: 이벤트 발생 일
 
       - name: session_id
         description: 사용자 방문을 구분하는 세션 ID
@@ -19,33 +22,33 @@ models:
           - not_null
 
       - name: event_order
-        description: 세션 내 클릭 순서 (사용자 행동 흐름을 나타냄)
+        description: 세션 내 클릭 순서 
         tests:
           - not_null
 
       - name: country
-        description: 사용자 접속 국가 (IP 기반)
+        description: 사용자 접속 국가 코드 (IP 기반 숫자 코드)
 
       - name: product_id
         description: 상품 식별자 (원본 clothing model 코드)
 
-      - name: category
-        description: 상품 메인 카테고리 (trousers, skirts, blouses, sale)
+      - name: category_code
+        description: 상품 메인 카테고리 코드 (1-trousers, 2-skirts, 3-blouses, 4-sale)
 
-      - name: color
-        description: 상품 색상 (코드값을 실제 색상명으로 변환)
+      - name: color_code
+        description: 상품 색상 코드 (1-beige, 2-black, …, 14-white)
 
-      - name: location
-        description: 웹페이지 내 상품 위치 (UI 영역)
+      - name: location_code
+        description: 웹페이지 내 상품 위치 코드 (1-top left … 6-bottom right)
 
-      - name: photography_type
-        description: 상품 이미지 촬영 방식 (front, profile)
+      - name: photography_type_code
+        description: 상품 이미지 촬영 방식 코드 (1-en face, 2-profile)
 
       - name: price
         description: 상품 가격 (USD)
 
-      - name: price_segment
-        description: 카테고리 평균 대비 가격 수준 (high, low)
+      - name: price_segment_code
+        description: 상품 가격 수준 코드 (1-yes, 2-no)
 
       - name: page_number
         description: 웹사이트 내 페이지 번호 (1~5)

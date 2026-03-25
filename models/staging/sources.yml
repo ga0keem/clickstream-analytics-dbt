@@ -24,7 +24,7 @@ sources:
             description: 이벤트 발생 월 (4월부터 8월까지)
 
           - name: day
-            description: 이벤트 발생 일자
+            description: 이벤트 발생 일
 
           - name: order
             description: 하나의 세션 내에서의 클릭 순서
@@ -34,15 +34,15 @@ sources:
               사용자 접속 국가 (IP 기반). 1~47까지의 코드로 표현되며
               국가 또는 도메인(.com, .net 등)을 의미
 
-          - name: session_id
+          - name: session ID
             description: 사용자 방문을 구분하는 세션 ID
 
-          - name: page_1_main_category
+          - name: page_main_category
             description: >
               상품의 메인 카테고리
               (1=trousers, 2=skirts, 3=blouses, 4=sale)
 
-          - name: page_2_clothing_model
+          - name: product_id
             description: 상품 고유 코드 (약 217개 상품)
 
           - name: colour
@@ -51,20 +51,18 @@ sources:
 
           - name: location
             description: >
-              웹페이지 내 상품 위치
-              (1=좌측 상단, 2=상단 중앙, 3=우측 상단,
-               4=좌측 하단, 5=하단 중앙, 6=우측 하단)
+              웹페이지 내 상품 위치 (1~6 코드로 표현되며 top left, top right 등 의미)
 
-          - name: model_photography
-            description: 상품 이미지 촬영 방식 (1=정면, 2=측면)
+          - name: model photography
+            description: 상품 이미지 촬영 방식 (1=en face, 2=profile)
 
           - name: price
-            description: 상품 가격 (미국 달러 기준)
+            description: 상품 가격 (달러 기준)
 
-          - name: price_2
+          - name: price 2
             description: >
               해당 상품 가격이 카테고리 평균보다 높은지 여부
-              (1=높음, 2=낮음)
+              (1=yes, 2=no)
 
           - name: page
             description: 웹사이트 내 페이지 번호 (1~5)
