@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: stg_clickstream
+    description: >
+      raw_clickstream source를 기반으로 생성된 staging 모델.
+      원본 컬럼명을 정리하고 최소 변환만 수행한 이벤트 단위 데이터이다.
+
+    columns:
+      - name: year
+        description: 이벤트 발생 연도 (2008년)
+
+      - name: month
+        description: 이벤트 발생 월 (4~8월)
+
+      - name: day
+        description: 이벤트 발생 일
+
+      - name: session_id
+        description: 사용자 방문을 구분하는 세션 ID
+        tests:
+          - not_null
+
+      - name: event_order
+        description: 세션 내 클릭 순서 
+        tests:
+          - not_null
+
+      - name: country
+        description: 사용자 접속 국가 코드 (IP 기반 숫자 코드)
+
+      - name: product_id
+        description: 상품 식별자 (원본 clothing model 코드)
+
+      - name: category_code
+        description: 상품 메인 카테고리 코드 (1-trousers, 2-skirts, 3-blouses, 4-sale)
+
+      - name: color_code
+        description: 상품 색상 코드 (1-beige, 2-black, …, 14-white)
+
+      - name: location_code
+        description: 웹페이지 내 상품 위치 코드 (1-top left … 6-bottom right)
+
+      - name: photography_type_code
+        description: 상품 이미지 촬영 방식 코드 (1-en face, 2-profile)
+
+      - name: price
+        description: 상품 가격 (USD)
+
+      - name: price_segment_code
+        description: 상품 가격 수준 코드 (1-yes, 2-no)
+
+      - name: page_number
+        description: 웹사이트 내 페이지 번호 (1~5)

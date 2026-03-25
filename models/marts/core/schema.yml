@@ -1,0 +1,137 @@
+version: 2
+
+models:
+
+  - name: fct_events
+    description: >
+      이벤트 단위 fact 테이블.
+      1 row = 1 event이며 event_id를 기준으로 고유하게 식별된다.
+      사용자 행동의 가장 상세한 단위 데이터를 포함하며,
+      모든 분석의 기반이 되는 테이블이다.
+
+    columns:
+      - name: event_id
+        description: 이벤트 단위 surrogate key
+        tests:
+          - not_null
+          - unique
+
+      - name: session_id
+        description: 세션 식별자
+        tests:
+          - not_null
+
+      - name: event_order
+        description: 세션 내 이벤트 순서
+
+      - name: event_date
+        description: 이벤트 발생 일자
+
+      - name: product_id
+        description: 상품 식별자
+
+      - name: country
+        description: 사용자 접속 국가
+
+      - name: page_number
+        description: 페이지 번호
+
+      - name: price
+        description: 상품 가격
+
+      - name: price_segment
+        description: 가격 구간
+
+      - name: location
+        description: UI 내 위치
+
+      - name: photography_type
+        description: 이미지 촬영 방식
+
+
+  - name: fct_sessions
+    description: >
+      세션 단위 fact 테이블.
+      1 row = 1 session이며 session_id를 기준으로 고유하다.
+      세션의 행동 요약 정보와 집계 지표를 포함한다.
+
+    columns:
+      - name: session_id
+        description: 세션 식별자
+        tests:
+          - not_null
+          - unique
+
+      - name: session_duration
+        description: 세션 지속 시간 (초 단위)
+
+      - name: event_count
+        description: 세션 내 이벤트 수
+
+      - name: unique_products
+        description: 세션 내 서로 다른 상품 수
+
+      - name: max_page
+        description: 세션 내 최대 도달 페이지
+
+      - name: country
+        description: 세션 기준 사용자 국가 (집계 기반)
+
+
+  - name: dim_products
+    description: >
+      상품 단위 dimension 테이블.
+      1 row = 1 product이며 product_id를 기준으로 고유하다.
+      이벤트 데이터를 기반으로 안정화된 상품 속성을 제공한다.
+
+    columns:
+      - name: product_id
+        description: 상품 식별자
+        tests:
+          - not_null
+          - unique
+
+      - name: category
+        description: 상품 카테고리
+
+      - name: avg_price
+        description: 상품 평균 가격 (이벤트 기반 집계)
+
+      - name: price_segment
+        description: 평균 가격 기반 가격 구간
+
+
+  - name: dim_users
+    description: >
+      국가 기준 사용자 dimension 테이블.
+      1 row = 1 country이며, 사용자 식별자가 없는 환경에서
+      국가 단위 분석을 위한 light dimension 역할을 수행한다.
+
+    columns:
+      - name: country
+        description: 사용자 국가
+        tests:
+          - not_null
+          - unique
+
+
+  - name: dim_ui
+    description: >
+      UI/UX 분석을 위한 dimension 테이블.
+      location과 photography_type 조합 단위로 구성되며,
+      사용자 인터페이스 요소별 성과 분석에 활용된다.
+
+    columns:
+      - name: location
+        description: UI 내 위치
+
+      - name: photography_type
+        description: 이미지 촬영 방식
+
+      - name: location
+        tests:
+          - not_null
+
+      - name: photography_type
+        tests:
+          - not_null
